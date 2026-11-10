@@ -1,0 +1,153 @@
+.pagina {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.tarjeta {
+  width: min(880px, 100%);
+  min-height: 540px;
+  display: grid;
+  grid-template-columns: 210px 1fr;
+  gap: 24px;
+  padding: 28px 28px 24px 22px;
+  border-radius: 24px;
+  background: var(--gris-panel);
+}
+
+.lateral {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.logo {
+  width: 110px;
+  height: auto;
+}
+
+.regresar {
+  margin-top: auto;
+  align-self: flex-start;
+  min-width: 90px;
+  height: 34px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 8px;
+  background: #4db6c4;
+  font: inherit;
+  font-size: 0.9rem;
+  color: #fff;
+  cursor: pointer;
+  transition: filter 0.15s;
+}
+
+.regresar:hover {
+  filter: brightness(1.08);
+}
+
+.regresar:focus-visible {
+  outline: 3px solid var(--azul-marino);
+  outline-offset: 2px;
+}
+
+.texto {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  text-align: justify;
+}
+
+.contenido {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.titulo {
+  margin: 0 0 14px;
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+.marco {
+  position: relative;
+  flex: 1;
+  min-height: 300px;
+  border: 3px solid #d4d4d4;
+  background: url('../assets/firma-guia.png') center / 40% auto no-repeat;
+}
+
+.marco.con-firma {
+  background-image: none;
+}
+
+canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.aviso {
+  margin: 10px 0 0;
+  font-size: 0.85rem;
+  color: var(--error);
+}
+
+.botones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.boton {
+  min-width: 90px;
+  height: 34px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 8px;
+  font: inherit;
+  font-size: 0.9rem;
+  color: #fff;
+  cursor: pointer;
+  transition: filter 0.15s;
+}
+
+.boton:hover:not(:disabled) {
+  filter: brightness(1.1);
+}
+
+.boton:focus-visible {
+  outline: 3px solid var(--azul-marino);
+  outline-offset: 2px;
+}
+
+.boton:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.boton-borrar {
+  background: var(--azul-medio);
+}
+
+.boton-aceptar {
+  background: var(--azul-marino);
+}
+
+@media (max-width: 720px) {
+  .tarjeta {
+    grid-template-columns: 1fr;
+    padding: 22px 18px;
+  }
+
+  .marco {
+    min-height: 240px;
+  }
+}

@@ -1,0 +1,264 @@
+.mapa-host {
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+  /* En la vista del invitado, la pantalla define --reserva para que el mapa quepa sin bajar. */
+  max-width: calc((100vh - var(--reserva, 0px)) * var(--razon, 1.63));
+}
+
+.mapa-marco {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Escena de tamaño fijo (en px) que mapa.js escala al ancho disponible. */
+.escena {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
+  color: var(--texto-mapa, inherit);
+}
+
+.decorado {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.decorado svg {
+  display: block;
+}
+
+/* ---------- Letra de cada mesa ---------- */
+.et {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.letra {
+  font: inherit;
+  color: inherit;
+}
+
+.letra-editable {
+  padding: 4px 12px;
+  border: 2px dashed transparent;
+  border-radius: 10px;
+  background: none;
+  cursor: pointer;
+}
+
+.letra-editable:hover,
+.letra-editable:focus-visible {
+  border-color: currentColor;
+  outline: none;
+}
+
+.letra-entrada {
+  width: 76px;
+  padding: 4px 6px;
+  border: 3px solid #1e88c8;
+  border-radius: 10px;
+  font: inherit;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* ---------- Puesto (silla + placa + número) ----------
+   Se dibuja con la silla hacia arriba y se gira desde la placa según la mesa. */
+.celda {
+  position: absolute;
+  width: 64px;
+  height: 96px;
+  padding: 0;
+  border: 0;
+  border-radius: 14px;
+  background: none;
+  font: inherit;
+  color: inherit;
+  transform-origin: 32px 70px;
+  cursor: default;
+}
+
+.celda:not(:disabled) {
+  cursor: pointer;
+}
+
+/* Resaltado, selección y foco: solo alrededor de la silla (no de la placa ni de la mesa) */
+.celda::before {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: -1px;
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  pointer-events: none;
+}
+
+.celda:not(:disabled):hover::before {
+  background: rgba(30, 136, 200, 0.18);
+}
+
+.celda:focus-visible {
+  outline: none;
+}
+
+.celda:focus-visible::before {
+  outline: 3px solid #1e88c8;
+}
+
+.celda.sel::before {
+  background: rgba(30, 136, 200, 0.3);
+  box-shadow: 0 0 0 3px #1e88c8 inset;
+}
+
+.silla {
+  position: absolute;
+  left: 9px;
+  top: 3px;
+  width: 46px;
+  height: 46px;
+  transform: rotate(180deg); /* el respaldo queda del lado de afuera de la mesa */
+  pointer-events: none;
+}
+
+.placa {
+  position: absolute;
+  left: 13px;
+  top: 57px;
+  width: 38px;
+  height: 26px;
+  border: 2px solid #b4b6c2;
+  border-radius: 8px;
+  background: #e9eaee;
+  pointer-events: none;
+}
+
+.placa::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 13px;
+  height: 13px;
+  margin: -6.5px 0 0 -6.5px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #666 0%, #15151a 70%);
+}
+
+/* El número va dentro de la silla; se contra-gira para quedar siempre derecho */
+.num {
+  position: absolute;
+  left: 32px;
+  top: 26px;
+  transform: translate(-50%, -50%) rotate(calc(var(--r, 0) * -1deg));
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.7), 0 1px 2px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+}
+
+/* Silla sin invitado: se ve atenuada, con el número oscuro para que se lea */
+.celda.libre .silla,
+.celda.libre .placa {
+  opacity: 0.5;
+}
+
+.celda.libre .num {
+  color: var(--texto-mapa, #1b1b1f);
+  text-shadow: none;
+}
+
+.punto {
+  position: absolute;
+  left: 46px;
+  top: 0;
+  width: 14px;
+  height: 14px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: #2e9e5b;
+  pointer-events: none;
+}
+
+.punto.pendiente {
+  background: #e0a100;
+}
+
+/* Halo pulsante alrededor de la silla del invitado */
+.mapa.resaltar .celda.mio::before {
+  border: 4px solid #1e88c8;
+  background: rgba(30, 136, 200, 0.18);
+  animation: pulso 1.8s ease-out infinite;
+}
+
+@keyframes pulso {
+  0% {
+    box-shadow: 0 0 0 0 rgba(30, 136, 200, 0.55);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 20px rgba(30, 136, 200, 0);
+  }
+}
+
+/* ---------- Casita (asiento del invitado), siempre derecha, más allá de la silla ---------- */
+.casa {
+  position: absolute;
+  left: 32px;
+  top: -20px;
+  width: 44px;
+  height: auto;
+  transform: translate(-50%, -50%) rotate(calc(var(--r, 0) * -1deg));
+  pointer-events: none;
+}
+
+/* En fondo oscuro la casita se aclara para que se vea */
+.oscuro .casa {
+  filter: brightness(1.8) saturate(1.2);
+}
+
+/* ---------- Asiento quitado (solo admin): hueco para volver a agregarlo ---------- */
+.fantasma .silla-fantasma {
+  position: absolute;
+  left: 9px;
+  top: 3px;
+  display: grid;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+  border: 2px dashed currentColor;
+  border-radius: 12px;
+  font-size: 30px;
+  font-weight: 300;
+  line-height: 1;
+  opacity: 0.7;
+}
+
+.fantasma .num {
+  top: 83px; /* sin silla: el número queda sobre la mesa */
+  opacity: 0.6;
+}
+
+.fantasma:hover .silla-fantasma {
+  opacity: 1;
+  background: rgba(30, 136, 200, 0.18);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
