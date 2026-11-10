@@ -1,0 +1,6 @@
+/vendor
+/node_modules
+.env
+/storage/app/firmas/*.png
+/database/database.sqlite
+/storage/logs/*.log

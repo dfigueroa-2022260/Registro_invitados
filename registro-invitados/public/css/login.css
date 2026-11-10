@@ -1,0 +1,256 @@
+.pagina {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.tarjeta {
+  width: min(880px, 100%);
+  min-height: 540px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-radius: 24px;
+  overflow: hidden;
+  background: var(--gris-panel);
+}
+
+.ilustracion {
+  background: #fff;
+}
+
+.ilustracion img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 24px 0 0 24px;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 36px 28px 22px;
+}
+
+.logo {
+  width: 128px;
+  height: auto;
+}
+
+.titulo {
+  margin: 14px 0 0;
+  font-size: 1.1rem;
+  font-weight: 400;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.campos {
+  width: 100%;
+  max-width: 300px;
+  margin-top: 40px;
+}
+
+label {
+  display: block;
+  margin: 0 0 6px;
+  font-size: 0.95rem;
+}
+
+input,
+select {
+  width: 100%;
+  height: 36px;
+  border-radius: 10px;
+  font: inherit;
+  font-size: 0.95rem;
+}
+
+input {
+  padding: 0 12px;
+  border: 1px solid var(--tinta);
+  background: var(--azul-claro);
+  color: var(--tinta);
+  margin-bottom: 4px;
+}
+
+label + .selector,
+.aviso + label,
+input + label {
+  margin-top: 26px;
+}
+
+.selector {
+  position: relative;
+}
+
+select {
+  appearance: none;
+  padding: 0 44px 0 12px;
+  border: 0;
+  background: var(--azul-medio);
+  color: #fff;
+  cursor: pointer;
+}
+
+select option {
+  color: var(--tinta);
+  background: #fff;
+}
+
+.selector::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='1.5'%3E%3Ccircle cx='12' cy='12' r='10.5'/%3E%3Cpath d='M7.5 9.5h9L12 15z' fill='white' stroke='none'/%3E%3C/svg%3E")
+    center / contain no-repeat;
+}
+
+input:focus-visible,
+select:focus-visible,
+.boton:focus-visible,
+.admin:focus-visible {
+  outline: 3px solid var(--azul-marino);
+  outline-offset: 2px;
+}
+
+[aria-invalid='true'] {
+  outline: 2px solid var(--error);
+  outline-offset: 1px;
+}
+
+.aviso {
+  margin: 6px 0 0;
+  font-size: 0.85rem;
+  color: var(--error);
+}
+
+.aviso-general {
+  margin-top: 18px;
+}
+
+.pie {
+  width: 100%;
+  margin-top: auto;
+  padding-top: 24px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.admin {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: var(--tinta);
+  text-decoration: none;
+}
+
+.admin:hover {
+  text-decoration: underline;
+}
+
+.botones {
+  display: flex;
+  gap: 14px;
+}
+
+.boton {
+  min-width: 90px;
+  height: 34px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 8px;
+  font: inherit;
+  font-size: 0.9rem;
+  color: #fff;
+  cursor: pointer;
+  transition: filter 0.15s;
+}
+
+.boton:hover:not(:disabled) {
+  filter: brightness(1.1);
+}
+
+.boton:disabled {
+  opacity: 0.7;
+  cursor: progress;
+}
+
+.boton-borrar {
+  background: var(--azul-medio);
+}
+
+.boton-siguiente {
+  background: var(--azul-marino);
+}
+
+@media (max-width: 720px) {
+  .tarjeta {
+    grid-template-columns: 1fr;
+  }
+
+  .ilustracion {
+    height: 180px;
+  }
+
+  .ilustracion img {
+    border-radius: 24px 24px 0 0;
+    object-position: center 40%;
+  }
+
+  .panel {
+    padding-top: 28px;
+  }
+
+  .campos {
+    margin-top: 28px;
+  }
+}
+
+/* ---------- Acceso de administrador ---------- */
+.velo {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 24, 40, 0.45);
+}
+
+.dialogo {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: min(360px, calc(100vw - 32px));
+  padding: 24px;
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+  background: var(--gris-panel);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+}
+
+.dialogo h2 {
+  margin: 0 0 16px;
+  font-size: 1.15rem;
+  font-weight: 500;
+}
+
+.dialogo input {
+  padding: 0 12px;
+  border: 1px solid var(--tinta);
+  background: var(--azul-claro);
+}
+
+.dialogo-botones {
+  justify-content: flex-end;
+  margin-top: 18px;
+}
