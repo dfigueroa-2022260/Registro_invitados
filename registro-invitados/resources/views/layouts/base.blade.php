@@ -2,7 +2,7 @@
 <html lang="es">
   <head>
     <meta charset="utf-8" />
-    <title>@yield('titulo', 'UDEVIPO · Registro de invitados')</title>
+    <title>@yield('titulo', 'Ministerio de Comunicaciones, Infraestructura y Vivienda · Registro de invitados')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta name="base-url" content="{{ parse_url(url('/'), PHP_URL_PATH) }}" />
