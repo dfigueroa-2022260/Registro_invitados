@@ -235,7 +235,7 @@ class ExportarService
         $pdf->SetXY($izquierda, 36);
         $pdf->SetFont('Helvetica', 'B', 18);
         $pdf->SetTextColor($ar, $ag, $ab);
-        $pdf->Cell(0, 22, $txt('UDEVIPO · Lista de asistencia'), 0, 1);
+        $pdf->Cell(0, 22, $txt('Ministerio de Comunicaciones, Infraestructura y Vivienda · Lista de asistencia'), 0, 1);
         $pdf->SetFont('Helvetica', '', 10);
         $pdf->SetTextColor(68, 68, 68);
         $generado = $this->fechaLocal(now());
